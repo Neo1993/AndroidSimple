@@ -56,7 +56,7 @@ public class MyApplication extends Application {
          * 初始化厂商通道
          */
         //小米通道
-        MiPushRegistar.register(this, "填写您在小米后台APP对应的xiaomi id", "填写您在小米后台APP对应的xiaomi key");
+        MiPushRegistar.register(this, "2882303761518896394", "5291889623394");
         //华为通道，注意华为通道的初始化参数在minifest中配置
         HuaWeiRegister.register(this);
         //魅族通道
