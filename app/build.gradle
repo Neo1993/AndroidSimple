@@ -13,6 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
 
+        //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
+        flavorDimensions "versionCode"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // 指定最终打包中包含的 C 库平台版本，限制为一种可极大的缩小打包体积
@@ -22,12 +25,47 @@ android {
         }
     }
 
-    buildTypes {
+    signingConfigs {        // 配置签名配置，可以配置多个
         release {
-            minifyEnabled false
+            storeFile file('android.jks')
+            keyAlias 'alias'
+            keyPassword 'a12345678'
+            storePassword 'a12345678'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors { // 定义风味包，刚开始可以不写这个配置，该配置通常用于后期的渠道打包
+        yingyongbao {
+            //设置yingyongbao 应用市场渠道名为yingyongbao
+            manifestPlaceholders = [app_name: "Simple_yingyongbao",
+                                    app_icon: "@string/app_name_baidu",
+                                    UMENG_CHANNEL_VALUE: "yingyongbao"]
+        }
+
+        xiaomi {
+            //设置xiaomi 应用市场渠道名为xiaomi
+            manifestPlaceholders = [app_name: "Simple_xiaomi",
+                                    app_icon: "@string/app_name_baidu",
+                                    UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -47,6 +85,12 @@ dependencies {
     implementation project(':soulplanet')
 
     //友盟
+    implementation 'com.umeng.umsdk:common:9.3.3'
+    implementation  'com.umeng.umsdk:asms:1.1.4'
+
+//可选集成，对应产品中稳定性模块（错误捕获），该功能已经独立成为新的应用性能监控产品U-APM
+    implementation 'com.umeng.umsdk:apm:1.1.0'
+
     implementation 'com.umeng.umsdk:huawei-basetb:2.6.3.306'
     implementation 'com.umeng.umsdk:huawei-pushtb:2.6.3.306'
     implementation 'com.umeng.umsdk:huawei-umengaccs:1.2.4'
@@ -79,8 +123,8 @@ dependencies {
     implementation 'com.umeng.umsdk:agoo_tlog:3.0.0.17'
     implementation 'com.umeng.umsdk:agoo_tnet4android:3.1.14.9'
 
-    implementation  'com.umeng.umsdk:asms:1.1.3'
-    implementation 'com.umeng.umsdk:crash:0.0.4'
+//    implementation  'com.umeng.umsdk:asms:1.1.3'
+//    implementation 'com.umeng.umsdk:crash:0.0.4'
 
 
 }
