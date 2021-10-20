@@ -39,6 +39,11 @@
         <activity android:name=".activity.ProgressBarActivity"/>
         <activity android:name=".activity.CalendarActivity"/>
         <activity android:name=".activity.SidebarActivity"/>
+        <activity android:name=".activity.PushActivity" android:exported="true"/>
+
+        <!--友盟统计appkey配置-->
+        <meta-data android:name="UMENG_APPKEY" android:value="5cac9da40cafb2a2bd00148e" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}" />
 
         <!-- 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 start-->
         <service

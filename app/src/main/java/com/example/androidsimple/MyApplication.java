@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.example.androidsimple.activity.PushActivity;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -41,9 +42,12 @@ public class MyApplication extends Application {
         // 参数四：设备类型，必须参数，传参数为UMConfigure.DEVICE_TYPE_PHONE则表示手机；传参数为UMConfigure.DEVICE_TYPE_BOX则表示盒子；默认为手机；
         // 参数五：Push推送业务的secret 填充Umeng Message Secret对应信息（需替换）
 //        UMConfigure.init(this, "应用申请的Appkey", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret 填充Umeng Message Secret对应信息");
-        //生产环境
+        //初始化SDK
 //        UMConfigure.init(this, "5fd5d509498d9e0d4d8be198", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "d04542f93e4bfe5fbb3e93d9324fe2cc");
         UMConfigure.init(this, "5fd5f9eedd289153391bbe8f", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "51ce96adc1d0ad020feefe7685334899");
+
+        // 选用MANUAL页面采集模式
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
 
         //获取消息推送代理示例
         PushAgent mPushAgent = PushAgent.getInstance(this);
