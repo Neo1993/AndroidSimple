@@ -44,7 +44,7 @@ public class MyApplication extends Application {
 //        UMConfigure.init(this, "应用申请的Appkey", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret 填充Umeng Message Secret对应信息");
         //初始化SDK
 //        UMConfigure.init(this, "5fd5d509498d9e0d4d8be198", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "d04542f93e4bfe5fbb3e93d9324fe2cc");
-        UMConfigure.init(this, "5fd5f9eedd289153391bbe8f", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "51ce96adc1d0ad020feefe7685334899");
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
 
         // 选用MANUAL页面采集模式
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);

@@ -14,7 +14,7 @@ android {
         versionName "1.0"
 
         //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
-        flavorDimensions "versionCode"
+        flavorDimensions "default"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -50,18 +50,23 @@ android {
     }
 
     productFlavors { // 定义风味包，刚开始可以不写这个配置，该配置通常用于后期的渠道打包
+
+        dev{
+            //设置dev 应用市场渠道名为dev
+            manifestPlaceholders = [app_name: "Simple_dev", app_icon: "@string/app_name_baidu",
+                                    UMENG_CHANNEL_VALUE: name, UMENG_KEY: "5fd5d509498d9e0d4d8be198", UMENG_SECRET: "d04542f93e4bfe5fbb3e93d9324fe2cc"]
+        }
+
         yingyongbao {
             //设置yingyongbao 应用市场渠道名为yingyongbao
-            manifestPlaceholders = [app_name: "Simple_yingyongbao",
-                                    app_icon: "@string/app_name_baidu",
-                                    UMENG_CHANNEL_VALUE: "yingyongbao"]
+            manifestPlaceholders = [app_name: "Simple_yingyongbao", app_icon: "@string/app_name_baidu",
+                                    UMENG_CHANNEL_VALUE: name, UMENG_KEY: "5fd5d509498d9e0d4d8be198", UMENG_SECRET: "d04542f93e4bfe5fbb3e93d9324fe2cc"]
         }
 
         xiaomi {
             //设置xiaomi 应用市场渠道名为xiaomi
-            manifestPlaceholders = [app_name: "Simple_xiaomi",
-                                    app_icon: "@string/app_name_baidu",
-                                    UMENG_CHANNEL_VALUE: "xiaomi"]
+            manifestPlaceholders = [app_name: "Simple_xiaomi", app_icon: "@string/app_name_baidu",
+                                    UMENG_CHANNEL_VALUE: name, UMENG_KEY: "5fd5d509498d9e0d4d8be198", UMENG_SECRET: "d04542f93e4bfe5fbb3e93d9324fe2cc"]
         }
 
     }
@@ -87,12 +92,11 @@ dependencies {
     implementation project(':calendar')
 
 
-    //友盟
-    implementation 'com.umeng.umsdk:common:9.3.3'
-    implementation  'com.umeng.umsdk:asms:1.1.4'
 
+    //友盟
 //可选集成，对应产品中稳定性模块（错误捕获），该功能已经独立成为新的应用性能监控产品U-APM
-    implementation 'com.umeng.umsdk:apm:1.1.0'
+//    implementation 'com.umeng.umsdk:apm:1.1.0'
+    implementation 'com.umeng.umsdk:crash:0.0.5'
 
     implementation 'com.umeng.umsdk:huawei-basetb:2.6.3.306'
     implementation 'com.umeng.umsdk:huawei-pushtb:2.6.3.306'
@@ -111,11 +115,12 @@ dependencies {
     implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.1.4'
 
     //基础组件库依赖(必须)
-    implementation 'com.umeng.umsdk:common:9.1.0'
+    implementation 'com.umeng.umsdk:common:9.3.8'
+    implementation  'com.umeng.umsdk:asms:1.2.2'
     implementation 'com.umeng.umsdk:utdid:1.5.2'
 
     //友盟push相关依赖(必须)
-    implementation 'com.umeng.umsdk:push:6.1.0'
+    implementation 'com.umeng.umsdk:push:6.2.0'
 
     implementation 'com.umeng.umsdk:alicloud-httpdns:1.2.5'
     implementation 'com.umeng.umsdk:alicloud-utils:1.1.5'
@@ -125,9 +130,5 @@ dependencies {
     implementation 'com.umeng.umsdk:agoo_networksdk:3.5.5'
     implementation 'com.umeng.umsdk:agoo_tlog:3.0.0.17'
     implementation 'com.umeng.umsdk:agoo_tnet4android:3.1.14.9'
-
-//    implementation  'com.umeng.umsdk:asms:1.1.3'
-//    implementation 'com.umeng.umsdk:crash:0.0.4'
-
 
 }
