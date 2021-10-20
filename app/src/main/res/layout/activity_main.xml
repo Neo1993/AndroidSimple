@@ -14,4 +14,28 @@
         android:layout_height="40dp"
         android:text="仿soul的3D星球效果" />
 
+    <TextView
+        android:id="@+id/webTV"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Web测试" />
+
+    <TextView
+        android:id="@+id/progressbarTV"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="ProgressbarActivity" />
+
+    <TextView
+        android:id="@+id/calendarTV"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="CalendarActivity" />
+
+    <TextView
+        android:id="@+id/sidebarTV"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="CalendarActivity" />
+
 </LinearLayout>

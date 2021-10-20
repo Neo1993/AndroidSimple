@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DownloadBar">
+        <attr name="currentProgress" format="float|reference" />
+        <attr name="maxProgress" format="float|reference" />
+        <attr name="progressTextSize" format="reference|dimension" />
+        <attr name="backColor" format="color|reference" />
+        <attr name="foreColor" format="color|reference" />
+        <attr name="boxTextColor" format="color|reference" />
+        <attr name="largeThumbRadius" format="dimension|reference" />
+        <attr name="smallThumbRadius" format="dimension|reference" />
+        <attr name="textLeftRightPadding" format="dimension|reference" />
+        <attr name="textTopBottomPadding" format="dimension|reference" />
+        <attr name="progressBarHeight" format="dimension|reference" />
+        <attr name="triangleHeight" format="dimension|reference" />
+        <attr name="bar2TextDividerHeight" format="dimension|reference" />
+        <attr name="largeThumbColor" format="color|reference" />
+        <attr name="smallThumbColor" format="color|reference" />
+        <attr name="textBoxCorner" format="dimension|reference" />
+    </declare-styleable>
+
+    <!--涟漪控件属性-->
+    <declare-styleable name="mRippleView">
+        <attr name="cColor" format="color"/>
+        <attr name="cSpeed" format="integer"/>
+        <attr name="cDensity" format="integer"/>
+        <attr name="cIsFill" format="boolean"/>
+        <attr name="cIsAlpha" format="boolean"/>
+    </declare-styleable>
+
+</resources>

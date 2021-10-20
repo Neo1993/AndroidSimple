@@ -34,7 +34,11 @@
         </activity>
 
         <activity android:name=".activity.SoulPlantActivity"/>
+        <activity android:name=".activity.CommonWebActivity"/>
         <activity android:name=".activity.PushActivity"/>
+        <activity android:name=".activity.ProgressBarActivity"/>
+        <activity android:name=".activity.CalendarActivity"/>
+        <activity android:name=".activity.SidebarActivity"/>
 
         <!-- 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 start-->
         <service

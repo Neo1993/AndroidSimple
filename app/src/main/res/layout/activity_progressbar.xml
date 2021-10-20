@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.androidsimple.widget.CustomDownloadBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        app:backColor="#191633"
+        app:bar2TextDividerHeight="8dp"
+        app:currentProgress="0"
+        app:maxProgress="100"
+        app:foreColor="#d3992b"
+        app:largeThumbColor="#d3992b"
+        app:largeThumbRadius="8dp"
+        app:progressBarHeight="5dp"
+        app:progressTextSize="10sp"
+        app:smallThumbColor="@color/white"
+        app:smallThumbRadius="3dp"
+        app:boxTextColor="#333333"
+        app:textLeftRightPadding="6dp"
+        app:textTopBottomPadding="6dp"
+        app:triangleHeight="4.25dp"
+        app:textBoxCorner="3dp"/>
+
+</FrameLayout>
