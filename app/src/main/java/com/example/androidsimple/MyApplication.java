@@ -10,6 +10,10 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.example.androidsimple.activity.PushActivity;
+import com.jeffmony.downloader.VideoDownloadConfig;
+import com.jeffmony.downloader.VideoDownloadManager;
+import com.jeffmony.downloader.common.DownloadConstants;
+import com.jeffmony.downloader.utils.VideoStorageUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
@@ -24,6 +28,7 @@ import org.android.agoo.oppo.OppoRegister;
 import org.android.agoo.vivo.VivoRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 
+import java.io.File;
 import java.util.Map;
 
 public class MyApplication extends Application {
@@ -32,6 +37,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initUMeng();
+        initDownloadVideoConfig();
     }
 
     private void initUMeng(){
@@ -162,7 +168,19 @@ public class MyApplication extends Application {
         PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
     }
 
-
-
+    private void initDownloadVideoConfig() {
+        File file = VideoStorageUtils.getVideoCacheDir(this);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        VideoDownloadConfig config = new VideoDownloadManager.Build(this)
+                .setCacheRoot(file.getAbsolutePath())
+                .setTimeOut(DownloadConstants.READ_TIMEOUT, DownloadConstants.CONN_TIMEOUT)
+                .setConcurrentCount(DownloadConstants.CONCURRENT)
+                .setIgnoreCertErrors(false)
+                .setShouldM3U8Merged(false)
+                .buildConfig();
+        VideoDownloadManager.getInstance().initConfig(config);
+    }
 
 }

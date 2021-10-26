@@ -1,9 +1,10 @@
 package com.example.androidsimple.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
+import androidx.annotation.Nullable;
 
 import com.example.androidsimple.R;
 import com.example.androidsimple.base.BaseActivity;
@@ -20,7 +21,7 @@ public class CommonWebActivity extends BaseActivity {
     private void initView(){
         webView = findViewById(R.id.webView);
         initWebViewSettings();
-        webView.loadUrl("https://kfpc.shuoyingkeji.com/h5web");
+        webView.loadUrl("https://www.baidu.com");
     }
 
     private void initWebViewSettings() {

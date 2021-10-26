@@ -7,10 +7,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
+
+import androidx.appcompat.widget.TintTypedArray;
 
 import com.example.androidsimple.R;
 

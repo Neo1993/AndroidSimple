@@ -3,8 +3,10 @@ package com.example.androidsimple.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.androidsimple.R;
 import com.example.androidsimple.base.BaseActivity;
 import com.example.androidsimple.widget.CustomDownloadBar;

@@ -1,19 +1,16 @@
 package com.example.androidsimple.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import com.example.androidsimple.R;
 import com.example.androidsimple.base.BaseActivity;
 import com.example.androidsimple.widget.CustomDayView;
 import com.example.androidsimple.widget.RippleView;
 import com.ldf.calendar.component.CalendarAttr;
 import com.ldf.calendar.component.CalendarViewAdapter;
-import com.ldf.calendar.interf.OnSelectDateListener;
 import com.ldf.calendar.model.CalendarDate;
 import com.ldf.calendar.view.MonthPager;
-
-import java.util.HashMap;
 
 public class CalendarActivity extends BaseActivity {
     private MonthPager calendarView;

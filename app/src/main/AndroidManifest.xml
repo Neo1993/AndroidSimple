@@ -38,6 +38,7 @@
         <activity android:name=".activity.ProgressBarActivity"/>
         <activity android:name=".activity.CalendarActivity"/>
         <activity android:name=".activity.SidebarActivity"/>
+        <activity android:name=".activity.DownloadVideoActivity"/>
 
         <!--友盟统计appkey配置-->
         <meta-data android:name="UMENG_KEY" android:value="${UMENG_KEY}" />

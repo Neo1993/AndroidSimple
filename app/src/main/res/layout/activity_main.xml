@@ -36,6 +36,12 @@
         android:id="@+id/sidebarTV"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="CalendarActivity" />
+        android:text="SidebarActivity" />
+
+    <TextView
+        android:id="@+id/downloadVideoTV"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="DownloadVideoActivity" />
 
 </LinearLayout>
