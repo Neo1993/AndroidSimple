@@ -93,6 +93,7 @@ dependencies {
     implementation project(':soulplanet')
     implementation project(':calendar')
     implementation project(':downloader')
+    implementation project(':libs:lib-common')
 
     //友盟
 //可选集成，对应产品中稳定性模块（错误捕获），该功能已经独立成为新的应用性能监控产品U-APM

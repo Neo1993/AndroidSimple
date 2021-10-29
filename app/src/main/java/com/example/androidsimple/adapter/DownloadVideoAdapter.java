@@ -1,10 +1,15 @@
 package com.example.androidsimple.adapter;
 
+import android.media.Image;
+import android.view.View;
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.example.androidsimple.R;
 import com.jeffmony.downloader.model.VideoTaskItem;
 import com.jeffmony.downloader.model.VideoTaskState;
+import com.lib.common.image.ImageLoader;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +24,8 @@ public class DownloadVideoAdapter extends BaseQuickAdapter<VideoTaskItem, BaseVi
 
     @Override
     protected void convert(@NotNull BaseViewHolder holder, VideoTaskItem videoTaskItem) {
-
+        ImageView coverIV = holder.findView(R.id.coverIV);
+        ImageLoader.displayImageView(getContext(), videoTaskItem.getCoverPath(), coverIV);
         holder.setText(R.id.url_text, videoTaskItem.getUrl());
         switch (videoTaskItem.getTaskState()){
             case VideoTaskState.PENDING:
