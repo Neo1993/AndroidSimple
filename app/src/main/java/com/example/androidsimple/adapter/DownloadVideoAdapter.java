@@ -25,7 +25,7 @@ public class DownloadVideoAdapter extends BaseQuickAdapter<VideoTaskItem, BaseVi
     @Override
     protected void convert(@NotNull BaseViewHolder holder, VideoTaskItem videoTaskItem) {
         ImageView coverIV = holder.findView(R.id.coverIV);
-        ImageLoader.displayImageView(getContext(), videoTaskItem.getCoverPath(), coverIV);
+        ImageLoader.loadImageView(getContext(), videoTaskItem.getCoverPath(), coverIV);
         holder.setText(R.id.url_text, videoTaskItem.getUrl());
         switch (videoTaskItem.getTaskState()){
             case VideoTaskState.PENDING:
