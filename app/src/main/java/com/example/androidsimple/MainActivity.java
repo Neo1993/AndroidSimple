@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.androidsimple.activity.CalendarActivity;
 import com.example.androidsimple.activity.CommonWebActivity;
+import com.example.androidsimple.activity.CustomViewActivity;
 import com.example.androidsimple.activity.DownloadVideoActivity;
 import com.example.androidsimple.activity.ProgressBarActivity;
 import com.example.androidsimple.activity.SidebarActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView calendarTV;
     private TextView sidebarTV;
     private TextView downloadVideoTV;
+    private TextView customViewTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         calendarTV = findViewById(R.id.calendarTV);
         sidebarTV = findViewById(R.id.sidebarTV);
         downloadVideoTV = findViewById(R.id.downloadVideoTV);
+        customViewTV = findViewById(R.id.customViewTV);
     }
 
     private void addListener(){
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         calendarTV.setOnClickListener(this);
         sidebarTV.setOnClickListener(this);
         downloadVideoTV.setOnClickListener(this);
+        customViewTV.setOnClickListener(this);
     }
 
     @Override
@@ -66,6 +70,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.downloadVideoTV:
                 startActivity(new Intent(MainActivity.this, DownloadVideoActivity.class));
+                break;
+            case R.id.customViewTV:
+                startActivity(new Intent(MainActivity.this, CustomViewActivity.class));
                 break;
         }
     }
