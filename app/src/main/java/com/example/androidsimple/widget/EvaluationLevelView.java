@@ -188,7 +188,7 @@ public class EvaluationLevelView extends View {
         float skewLength = (float) Math.sqrt(absX * absX + absY * absY);
         float diff = skewLength - (lastX - firstX);
         canvas.translate(-diff / sx, 0);
-        RectF rectF = new RectF(firstX, firstY - progressWidth / 2, firstX + skewLength, firstY + progressWidth / 2);
+        RectF rectF = new RectF(firstX + diff, firstY - progressWidth / 2, firstX + diff + skewLength, firstY + progressWidth / 2);
         canvas.drawRoundRect(rectF, progressWidth, progressWidth, progressPaint);
 
         Point point = points.get(currentLevel - 1);
