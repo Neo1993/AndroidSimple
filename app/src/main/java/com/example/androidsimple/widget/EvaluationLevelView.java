@@ -33,10 +33,6 @@ public class EvaluationLevelView extends View {
     private float fontHeight;
     private float horizonOffset;
     private float offsetY;
-    private float firstX;
-    private float lastX;
-    private float firstY;
-    private float lastY;
     private List<String> tagList = new ArrayList<>();
     private Paint tagPaint = new Paint();
     private Paint barPaint = new Paint();
@@ -58,11 +54,11 @@ public class EvaluationLevelView extends View {
     public void initView() {
         size = maxLevel - 1;
         progressWidth = dip2px(7);
-        barWidth = dip2px(10);
+        barWidth = dip2px(12);
         firstBarHeight = dip2px(20);
         lastBarHeight = dip2px(100);
         fontHeight = tagPaint.getFontMetrics().bottom - tagPaint.getFontMetrics().top;
-        offsetY = dip2px(42);
+        offsetY = dip2px(62);
         horizonOffset = dip2px(10);
 
         tagPaint.setAntiAlias(true);
@@ -159,12 +155,11 @@ public class EvaluationLevelView extends View {
         }
 
         drawProgress(canvas);
-        drawThumb(canvas);
         drawLevelBubble(canvas);
     }
 
     private void drawTagText(Canvas canvas, String tag, float x) {
-        float y = getHeight() - fontHeight / 2 ;
+        float y = getHeight() - fontHeight / 2;
         canvas.drawText(tag, x, y, tagPaint);
     }
 
@@ -177,38 +172,32 @@ public class EvaluationLevelView extends View {
         RectF rectF = new RectF(x - barWidth / 2, top, x + barWidth / 2, bottom);
         canvas.drawRoundRect(rectF, dip2px(10), dip2px(10), barPaint);
 
-        points.add(new Point((int)x, (int)top - dip2px(19)));
-
-        if (index == 0) {
-            firstX = x;
-            firstY = top - dip2px(19);
-        } else if (index == size) {
-            lastX = x;
-            lastY = top - dip2px(19);
-        }
+        points.add(new Point((int) x, (int) top - dip2px(40)));
     }
 
     private void drawProgress(Canvas canvas) {
-//        canvas.drawLine(firstX, firstY, lastX, lastY, progressPaint);
-//        double angle = Math.atan(Math.abs((lastY - firstY) / lastX - firstX));
-//        RectF rectF = new RectF(firstX - progressWidth / 4, firstY - progressWidth / 4, firstX + progressWidth / 4, firstY + progressWidth / 4);
-//        canvas.drawArc(rectF, (float) (0 - angle - 90), - 180, false, progressPaint);
-
+        float firstX = points.get(0).x;
+        float firstY = points.get(0).y;
+        float lastX = points.get(points.size() - 1).x;
+        float lastY = points.get(points.size() - 1).y;
         canvas.save();
-        RectF rectF  = new RectF(firstX, firstY - progressWidth / 2, lastX + barWidth / 2, firstY + progressWidth / 2);
-        canvas.skew((firstY - lastY) / (lastX - firstX), 0 - (firstY - lastY) / (lastX - firstX));
-        canvas.translate(0 - space - barWidth / 2, 0);
+        float sx = (firstY - lastY) / (lastX - firstX);
+        canvas.skew(sx, -sx);
+        float absX = Math.abs(firstX - lastX);
+        float absY = Math.abs(firstY - lastY);
+        float skewLength = (float) Math.sqrt(absX * absX + absY * absY);
+        float diff = skewLength - (lastX - firstX);
+        canvas.translate(-diff / sx, 0);
+        RectF rectF = new RectF(firstX, firstY - progressWidth / 2, firstX + skewLength, firstY + progressWidth / 2);
         canvas.drawRoundRect(rectF, progressWidth, progressWidth, progressPaint);
-        canvas.restore();
 
-    }
-
-    private void drawThumb(Canvas canvas) {
         Point point = points.get(currentLevel - 1);
         thumbPaint.setColor(Color.parseColor("#FFC929"));
-        canvas.drawCircle(point.x, point.y + dip2px(3) - 1, dip2px(6), thumbPaint);
+        canvas.drawCircle(point.x + diff, firstY, dip2px(6), thumbPaint);
         thumbPaint.setColor(Color.parseColor("#FFFFFF"));
-        canvas.drawCircle(point.x, point.y + dip2px(3) - 1, dip2px(3) - 2, thumbPaint);
+        canvas.drawCircle(point.x + diff, firstY, dip2px(3) - 2, thumbPaint);
+
+        canvas.restore();
     }
 
     private void drawLevelBubble(Canvas canvas) {
@@ -222,12 +211,12 @@ public class EvaluationLevelView extends View {
         float vertiPadding = dip2px(7);
         float triangle = dip2px(5);
         float marginBottom = dip2px(15);
-        RectF rectF = new RectF(centX - fontWidth / 2 -  horizonPadding, centY - vertiPadding * 2 + triangle - fongtHeight - marginBottom, centX + fontWidth /2 + horizonPadding, centY - triangle - marginBottom);
+        RectF rectF = new RectF(centX - fontWidth / 2 - horizonPadding, centY - vertiPadding * 2 + triangle - fongtHeight - marginBottom, centX + fontWidth / 2 + horizonPadding, centY - triangle - marginBottom);
         bubblePaint.setColor(Color.parseColor("#FFC929"));
         canvas.drawRoundRect(rectF, dip2px(20), dip2px(20), bubblePaint);
         Path path = new Path();
         path.moveTo(centX - triangle, centY - marginBottom - triangle);
-        path.lineTo(centX,centY - marginBottom);
+        path.lineTo(centX, centY - marginBottom);
         path.lineTo(centX + triangle, centY - marginBottom - triangle);
         path.close();
         canvas.drawPath(path, bubblePaint);
@@ -235,14 +224,15 @@ public class EvaluationLevelView extends View {
         canvas.drawText(text, centX, centY - triangle - marginBottom - vertiPadding + 2, bubblePaint);
     }
 
-    private void setMaxLevel(int maxLevel) {
+    public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;
+        this.size = maxLevel - 1;
     }
 
     public void setCurrentLevel(int currentLevel) {
-        if(currentLevel < 1) currentLevel = 1;
-        if(currentLevel > maxLevel) {
-           currentLevel = maxLevel;
+        if (currentLevel < 1) currentLevel = 1;
+        if (currentLevel > maxLevel) {
+            currentLevel = maxLevel;
         }
         this.currentLevel = currentLevel;
         invalidate();
@@ -257,8 +247,9 @@ public class EvaluationLevelView extends View {
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
-     * @param dpValue   dp值
-     * @return  px值
+     *
+     * @param dpValue dp值
+     * @return px值
      */
     public int dip2px(float dpValue) {
         final float scale = getContext().getResources().getDisplayMetrics().density;
@@ -267,6 +258,7 @@ public class EvaluationLevelView extends View {
 
     /**
      * 将px值转换为sp值，保证文字大小不变
+     *
      * @param pxValue 字体大小像素
      * @return 字体大小sp
      */
@@ -277,6 +269,7 @@ public class EvaluationLevelView extends View {
 
     /**
      * 将sp值转换为px值，保证文字大小不变
+     *
      * @param spValue 字体大小sp
      * @return 字体大小像素
      */

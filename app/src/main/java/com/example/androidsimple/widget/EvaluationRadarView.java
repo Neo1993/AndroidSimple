@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,16 +25,20 @@ public class EvaluationRadarView extends View {
     private Paint arcPaint = new Paint();
     private Paint dotPaint = new Paint();
     private Paint linePaint = new Paint();
+    private Paint innerAreaPaint = new Paint();
+    private Paint textPaint = new Paint();
 
     private int radius;
     private int radiusSpace;
     private int outStrokeWidth;
     private int innerStrokeWidth;
     private int radarOffset;
+    private int textMargin;
     private float dotRadius;
     private int size = 5;
     private float angle;
-    private int realRadius;
+
+    private Point centPoint = new Point();          //中心点
     private List<EvaluationRadarData> dataList = new ArrayList<>();
 
     public EvaluationRadarView(Context context) {
@@ -45,8 +52,14 @@ public class EvaluationRadarView extends View {
     }
 
     private void initView() {
+        radius = dip2px(80);
+        radiusSpace = radius / 4;
         angle = (float) (2 * Math.PI / size);
-        dotRadius = dip2px(10);
+        dotRadius = dip2px(5);
+        outStrokeWidth = dip2px(3);
+        innerStrokeWidth = dip2px(1);
+        radarOffset = dip2px(30);
+        textMargin = dip2px(16);
 
         arcPaint.setAntiAlias(true);
         arcPaint.setDither(true);
@@ -62,29 +75,36 @@ public class EvaluationRadarView extends View {
         linePaint.setColor(Color.parseColor("#E1E1E1"));
         linePaint.setStyle(Paint.Style.FILL_AND_STROKE);
         linePaint.setStrokeWidth(dip2px(1));
+
+        innerAreaPaint.setAntiAlias(true);
+        innerAreaPaint.setDither(true);
+
+        textPaint.setAntiAlias(true);
+        textPaint.setDither(true);
+        textPaint.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        radius = getWidth() / 2;
-        radiusSpace = radius / 4;
-
-        outStrokeWidth = dip2px(5);
-        innerStrokeWidth = dip2px(1);
-        radarOffset = outStrokeWidth / 2 + 3;
+        centPoint.x = getWidth() / 2;
+        centPoint.y = getHeight() / 2;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
+        int width = radius * radarOffset * 2;
+        int height = width;
+        setMeasuredDimension(width, height);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         drawArc(canvas);
         drawDot(canvas);
+        drawInnerArea(canvas);
+        drawText(canvas);
     }
 
     private void drawArc(Canvas canvas) {
@@ -98,23 +118,59 @@ public class EvaluationRadarView extends View {
                 arcPaint.setStrokeWidth(innerStrokeWidth);
                 arcPaint.setColor(Color.parseColor("#E1E1E1"));
             }
-            RectF rectF = new RectF(radarOffset + radius - i * radiusSpace, radius - i * radiusSpace + radarOffset,radius + i * radiusSpace - radarOffset, radius + i * radiusSpace - radarOffset);
+            RectF rectF = new RectF(centPoint.x - i * radiusSpace, centPoint.y - i * radiusSpace, centPoint.x + i * radiusSpace, centPoint.y + i * radiusSpace);
             canvas.drawArc(rectF, -90, 360, false, arcPaint);
         }
     }
 
     private void drawDot(Canvas canvas) {
-        realRadius = radius - radarOffset;
         for (int i = 0; i < size; i++) {
-            float x = (float) (radius + realRadius * (Math.sin(angle * i)));
-            float y = (float) (radius - realRadius * (Math.cos(angle * i)));
-            canvas.drawLine(radius, radius, x, y, linePaint);
+            float x = (float) (centPoint.x + radius * (Math.sin(angle * i)));
+            float y = (float) (centPoint.y - radius * (Math.cos(angle * i)));
+            canvas.drawLine(centPoint.x, centPoint.y, x, y, linePaint);
             canvas.drawCircle(x, y, dotRadius, dotPaint);
         }
     }
 
-    private void drawInnerDot(Canvas canvas) {
+    private void drawInnerArea(Canvas canvas) {
+        Path path = new Path();
+        for (int i = 0; i < size; i++) {
+            EvaluationRadarData data = dataList.get(i);
+            float percent = data.score / 100f;
+            float x = (float) (centPoint.x + percent * radius * (Math.sin(angle * i)));
+            float y = (float) (centPoint.y - percent * radius * (Math.cos(angle * i)));
+            if (i == 0) {
+                path.moveTo(x, y);
+            } else {
+                path.lineTo(x, y);
+            }
+        }
+        path.close();
+        innerAreaPaint.setStyle(Paint.Style.FILL);
+        innerAreaPaint.setColor(Color.parseColor("#36FFC929"));
+        canvas.drawPath(path, innerAreaPaint);
 
+        innerAreaPaint.setStyle(Paint.Style.STROKE);
+        innerAreaPaint.setStrokeWidth(dip2px(2));
+        innerAreaPaint.setColor(Color.parseColor("#FFC929"));
+        canvas.drawPath(path, innerAreaPaint);
+    }
+
+    private void drawText(Canvas canvas) {
+        for (int i = 0; i < size; i++) {
+            EvaluationRadarData data = dataList.get(i);
+            String title = data.title;
+            String score = String.valueOf(data.score);
+            float x = (float) (centPoint.x + (radarOffset + radius) * (Math.sin(angle * i)));
+            float y = (float) (centPoint.y - (radarOffset + radius) * (Math.cos(angle * i)));
+
+            textPaint.setTextSize(sp2px(14));
+            textPaint.setColor(Color.parseColor("#222325"));
+            canvas.drawText(title, x, y, textPaint);
+            textPaint.setTextSize(sp2px(11));
+            textPaint.setColor(Color.parseColor("#8D949B"));
+            canvas.drawText(String.format("( %s )", score), x, y + textMargin, textPaint);
+        }
     }
 
     public void setDataList(List<EvaluationRadarData> dataList) {
@@ -123,6 +179,13 @@ public class EvaluationRadarView extends View {
             size = dataList.size();
         }
         invalidate();
+    }
+
+    /**
+     * 屏幕宽度
+     */
+    public int screenWidth() {
+        return getContext().getResources().getDisplayMetrics().widthPixels;
     }
 
     /**

@@ -31,6 +31,7 @@ public class CustomViewActivity extends BaseActivity {
             public void run() {
                 currentLevel++;
                 runOnUiThread(()-> {
+                    evaluationLevelView.setMaxLevel(9);
                     evaluationLevelView.setCurrentLevel(currentLevel);
                 });
             }
