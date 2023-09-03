@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.example.androidsimple.activity.PushActivity;
+import com.example.androidsimple.utils.UtilsConfig;
 import com.jeffmony.downloader.VideoDownloadConfig;
 import com.jeffmony.downloader.VideoDownloadManager;
 import com.jeffmony.downloader.common.DownloadConstants;
@@ -36,6 +37,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        UtilsConfig.context = this;
         initUMeng();
         initDownloadVideoConfig();
     }
@@ -49,33 +51,33 @@ public class MyApplication extends Application {
         // 参数五：Push推送业务的secret 填充Umeng Message Secret对应信息（需替换）
 //        UMConfigure.init(this, "应用申请的Appkey", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret 填充Umeng Message Secret对应信息");
         //初始化SDK
-//        UMConfigure.init(this, "5fd5d509498d9e0d4d8be198", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "d04542f93e4bfe5fbb3e93d9324fe2cc");
-        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5fd5d509498d9e0d4d8be198", "dev", UMConfigure.DEVICE_TYPE_PHONE, "d04542f93e4bfe5fbb3e93d9324fe2cc");
+//        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
 
         // 选用MANUAL页面采集模式
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
 
         //获取消息推送代理示例
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-//        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER); //服务端控制声音
-
-        setMessageHandler();
-        setNotificationClickHandler();
-
-        //注册推送服务，每次调用register方法都会回调该接口
-        mPushAgent.register(new IUmengRegisterCallback() {
-
-            @Override
-            public void onSuccess(String deviceToken) {
-                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
-                Log.i(TAG,"注册成功：deviceToken：-------->  " + deviceToken);
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-                Log.e(TAG,"注册失败：-------->  " + "s:" + s + ",s1:" + s1);
-            }
-        });
+//        PushAgent mPushAgent = PushAgent.getInstance(this);
+////        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER); //服务端控制声音
+//
+//        setMessageHandler();
+//        setNotificationClickHandler();
+//
+//        //注册推送服务，每次调用register方法都会回调该接口
+//        mPushAgent.register(new IUmengRegisterCallback() {
+//
+//            @Override
+//            public void onSuccess(String deviceToken) {
+//                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
+//                Log.i(TAG,"注册成功：deviceToken：-------->  " + deviceToken);
+//            }
+//
+//            @Override
+//            public void onFailure(String s, String s1) {
+//                Log.e(TAG,"注册失败：-------->  " + "s:" + s + ",s1:" + s1);
+//            }
+//        });
 
 
         /**

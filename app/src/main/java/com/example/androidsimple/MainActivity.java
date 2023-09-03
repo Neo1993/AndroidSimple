@@ -2,6 +2,7 @@ package com.example.androidsimple;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.TextView;
 import com.example.androidsimple.activity.CalendarActivity;
@@ -26,6 +27,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         initView();
         addListener();
+        String s = new String(Base64.decode("OGl1YUtjdC5QTU4zOCEhMQ", 0));
+        System.out.println("s = " + s);
     }
 
     private void initView(){
