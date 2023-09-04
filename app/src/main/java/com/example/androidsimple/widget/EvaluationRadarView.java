@@ -18,6 +18,7 @@ import com.example.androidsimple.R;
 import com.example.androidsimple.bean.EvaluationRadarData;
 import com.huawei.android.hms.agent.common.UIUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,7 +170,7 @@ public class EvaluationRadarView extends View {
             canvas.drawText(title, x, y, textPaint);
             textPaint.setTextSize(sp2px(11));
             textPaint.setColor(Color.parseColor("#8D949B"));
-            canvas.drawText(String.format("( %s )", score), x, y + textMargin, textPaint);
+            canvas.drawText(String.format("( %s )", stripTrailingZeros(score)), x, y + textMargin, textPaint);
         }
     }
 
@@ -216,6 +217,23 @@ public class EvaluationRadarView extends View {
     public int sp2px(float spValue) {
         final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
+    }
+
+    /**
+     * 去掉小数点后面多余的0
+     * @param s
+     */
+    public static String stripTrailingZeros(String s) {
+        if (s == null) {
+            return "";
+        }
+        //若是String类型，也可以先转为BigDecimal
+        BigDecimal value = new BigDecimal(s);
+        //去除多余0
+        BigDecimal noZeros = value.stripTrailingZeros();
+        //BigDecimal => String
+        String result = noZeros.toPlainString();
+        return result;
     }
 
 }
