@@ -109,8 +109,8 @@ public class EvaluationRadarView extends View {
     }
 
     private void drawArc(Canvas canvas) {
-        for (int i = 1; i < size; i++) {
-            if (i == size - 1) {
+        for (int i = 1; i < 5; i++) {
+            if (i == 4) {
                 arcPaint.setPathEffect(null);
                 arcPaint.setStrokeWidth(outStrokeWidth);
                 arcPaint.setColor(Color.parseColor("#EEEEEF"));
@@ -178,6 +178,7 @@ public class EvaluationRadarView extends View {
         if (dataList != null && !dataList.isEmpty()) {
             this.dataList.addAll(dataList);
             size = dataList.size();
+            angle = (float) (2 * Math.PI / size);
         }
         invalidate();
     }

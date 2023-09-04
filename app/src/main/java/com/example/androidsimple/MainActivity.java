@@ -3,8 +3,10 @@ package com.example.androidsimple;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.androidsimple.activity.CalendarActivity;
 import com.example.androidsimple.activity.CommonWebActivity;
 import com.example.androidsimple.activity.CustomViewActivity;
@@ -39,6 +41,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         sidebarTV = findViewById(R.id.sidebarTV);
         downloadVideoTV = findViewById(R.id.downloadVideoTV);
         customViewTV = findViewById(R.id.customViewTV);
+
+        String imgUrl = "https://s3site.hanyubar.com/20230809/d21cfc77ed684c90bcc29211e04cc334.jpg";
+//        String imgUrl = "https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF";
+        Glide.with(this).load(imgUrl).into((ImageView) findViewById(R.id.testIV));
     }
 
     private void addListener(){

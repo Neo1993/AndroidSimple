@@ -49,7 +49,7 @@ public class CustomViewActivity extends BaseActivity {
         dataList.add(data2);
         dataList.add(data3);
         dataList.add(data4);
-        dataList.add(data5);
+//        dataList.add(data5);
 
         radarView.setDataList(dataList);
     }

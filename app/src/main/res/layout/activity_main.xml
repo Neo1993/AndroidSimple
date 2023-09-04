@@ -63,4 +63,9 @@
         android:layout_height="40dp"
         android:text="CustomViewActivity" />
 
+    <ImageView
+        android:id="@+id/testIV"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
 </LinearLayout>
